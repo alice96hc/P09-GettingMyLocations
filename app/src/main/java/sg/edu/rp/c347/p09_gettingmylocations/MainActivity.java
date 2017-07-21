@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     writer.write("" + "\n");
                     writer.flush();
                     writer.close();
-                    Toast.makeText(location.getLatitude() + ", " + location.getLongitude(), Toast.LENGTH_SHORT).show();
-                    
+                    //Toast.makeText(location.getLatitude() + ", " + location.getLongitude(), Toast.LENGTH_SHORT).show();
+
                 } catch (Exception e) {
                     Toast.makeText(MainActivity.this, "Failed to write!", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
