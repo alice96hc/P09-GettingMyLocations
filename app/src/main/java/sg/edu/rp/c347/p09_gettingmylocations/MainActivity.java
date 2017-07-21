@@ -84,10 +84,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 File targetFile = new File(folderLocation[0], "records.txt");
 
                 try {
+                    Location location = null;
+
+                    etLatitude.setText((int) location.getLatitude());
+                    etLongitude.setText((int) location.getLongitude());
+
                     FileWriter writer = new FileWriter(targetFile, true);
-                    writer.write("Hello world" + "\n");
+                    writer.write("" + "\n");
                     writer.flush();
                     writer.close();
+                    Toast.makeText(location.getLatitude() + ", " + location.getLongitude(), Toast.LENGTH_SHORT).show();
+                    
                 } catch (Exception e) {
                     Toast.makeText(MainActivity.this, "Failed to write!", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
@@ -164,14 +171,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        etLatitude.setText((int) location.getLatitude());
-        etLongitude.setText((int) location.getLongitude());
-
-        //the detected location is given by the variable location in the signature
-        Toast.makeText(this, location.getLatitude() + ", " + location.getLongitude(), Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
