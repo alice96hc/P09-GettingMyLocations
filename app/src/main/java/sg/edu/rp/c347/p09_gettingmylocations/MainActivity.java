@@ -25,10 +25,12 @@ import com.google.android.gms.location.LocationServices;
 
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
@@ -70,10 +72,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 Log.d("File Read/Write", "Folder created");
             }
         }
-        btnStart.setOnClickListener(new View.OnClickListener(){
+        btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                Intent i = new Intent(MainActivity.this,MyService.class);
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, MyService.class);
                 startService(i);
 
                 Toast.makeText(MainActivity.this, "Service is running", Toast.LENGTH_SHORT).show();
@@ -100,25 +102,35 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 stopService(i);
             }
         });
-        btnCheck.setOnClickListener(new View.OnClickListener(){
+
+        btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File targetFile = new File(String.valueOf(folderLocation),"records.txt");
+                File targetFile = new File(String.valueOf(folderLocation), "records.txt");
 
-                if(targetFile.exists()==true){
+                if (targetFile.exists() == true) {
                     String data = "";
-                    try{
+                    try {
                         FileReader reader = new FileReader(targetFile);
-                        
+                        BufferedReader br = new BufferedReader(reader);
+                        String line = br.readLine();
+                        while (line != null) {
+                            data += line + "\n";
+                            line = br.readLine();
+                        }
+                        br.close();
+                        reader.close();
 
                     } catch (FileNotFoundException e) {
+
+                        e.printStackTrace();
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
             }
-        }
-        );
+        });
     }
 
     @Override
